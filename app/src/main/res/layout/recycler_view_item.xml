@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data class="RecyclerViewModelBinding">
+
+        <import type="com.mytaxidemo.Util.Utils" />
+
+        <import type="com.mytaxidemo.R" />
+
+        <variable
+            name="listItem"
+            type="com.mytaxidemo.viewmodel.RecyclerViewModel" />
+
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:layout_margin="@dimen/layout_margin"
+        android:onClick="@{() -> itemClicked(listItem)}"
+        android:foreground="?android:attr/selectableItemBackground">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/fleet_type_padding"
+                android:src="@{Utils.isFleetTypePooling(listItem.fleetType) ? R.drawable.ic_car_tire_blowout : R.drawable.ic_taxi}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text='@{String.valueOf(listItem.heading)}' />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</layout>

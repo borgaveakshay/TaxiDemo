@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="recycler_view_left_margin">15dp</dimen>
+    <dimen name="recycler_view_right_margin">15dp</dimen>
+    <dimen name="recycler_view_top_padding">30dp</dimen>
+    <dimen name="recycler_view_height">250dp</dimen>
+
+    <!-- recycler view dimens  -->
+
+    <dimen name="fleet_type_padding">15dp</dimen>
+    <dimen name="layout_margin">5dp</dimen>
+    <dimen name="item_height">60dp</dimen>
+    <dimen name="heading_text_size">17dp</dimen>
+
+
+
+</resources>

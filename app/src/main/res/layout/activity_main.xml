@@ -30,7 +30,6 @@
             android:layout_marginRight="@dimen/recycler_view_right_margin"
             android:background="@drawable/rounded_corners"
             android:paddingTop="@dimen/recycler_view_top_padding"
-            android:onItemSelected="@{(v) -> onItemClicked(v)} "
             app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
 

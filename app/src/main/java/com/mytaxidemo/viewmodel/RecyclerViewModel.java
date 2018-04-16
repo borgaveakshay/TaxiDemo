@@ -2,6 +2,7 @@ package com.mytaxidemo.viewmodel;
 
 import android.annotation.SuppressLint;
 import android.databinding.BindingAdapter;
+import android.databinding.BindingMethod;
 import android.support.annotation.IdRes;
 import android.widget.ImageView;
 

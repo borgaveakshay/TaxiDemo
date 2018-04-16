@@ -19,7 +19,6 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_height"
         android:layout_margin="@dimen/layout_margin"
-        android:onClick="@{() -> itemClicked(listItem)}"
         android:foreground="?android:attr/selectableItemBackground">
 
         <RelativeLayout

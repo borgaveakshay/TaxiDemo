@@ -1,17 +1,10 @@
 package com.mytaxidemo.viewmodel;
 
 import android.arch.lifecycle.MutableLiveData;
-import android.databinding.BindingAdapter;
 import android.databinding.ObservableBoolean;
-import android.databinding.ObservableField;
-import android.os.Bundle;
 import android.util.Log;
 
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.mytaxidemo.model.PoiListItem;
 import com.mytaxidemo.model.PoiListModel;
 import com.mytaxidemo.network.RetrofitClient;
@@ -30,6 +23,7 @@ public class MapViewHolder {
     private static final String TAG = "MapViewModel";
     public MutableLiveData<List<LatLng>> mMapLatLng = new MutableLiveData<>();
     public ObservableBoolean isLoading = new ObservableBoolean();
+    public ObservableBoolean isSwipeToRefreshEnabled = new ObservableBoolean();
     public Observable<PoiListModel> mNearByTaxis;
     public MutableLiveData<List<RecyclerViewModel>> mNearByTaxiList = new MutableLiveData<>();
 
@@ -41,27 +35,10 @@ public class MapViewHolder {
         return mMapLatLng;
     }
 
-    @BindingAdapter("app:init")
-    public static void initMap(MapView mapView, final List<LatLng> latLng) {
-
-        if (mapView != null) {
-            mapView.onCreate(new Bundle());
-            mapView.getMapAsync(new OnMapReadyCallback() {
-                @Override
-                public void onMapReady(GoogleMap googleMap) {
-
-                    if (latLng != null && !latLng.isEmpty()) {
-                        for (LatLng latLong : latLng) {
-                            googleMap.addMarker(new MarkerOptions().position(latLong));
-                        }
-//                        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng1));
-                    }
-                }
-            });
-
-        }
-
+    public void setIsSwipeToRefreshEnabled(boolean isSwipeToRefreshEnabled) {
+        this.isSwipeToRefreshEnabled.set(isSwipeToRefreshEnabled);
     }
+
 
     public void onSwipeRefreshListener() {
 
@@ -103,6 +80,7 @@ public class MapViewHolder {
                                 RecyclerViewModel recyclerViewModel = new RecyclerViewModel();
                                 recyclerViewModel.setFleetType(poiListItem.getFleetType());
                                 recyclerViewModel.setHeading(poiListItem.getHeading());
+                                recyclerViewModel.setCoordinate(poiListItem.getCoordinate());
                                 recyclerViewModelList.add(recyclerViewModel);
 
                             }

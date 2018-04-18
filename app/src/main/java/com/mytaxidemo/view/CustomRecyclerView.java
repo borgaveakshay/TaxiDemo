@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
@@ -13,7 +14,15 @@ public abstract class CustomRecyclerView<T, E extends ViewDataBinding> extends R
     private List<T> mDataList;
     private LayoutInflater mLayoutInflater;
     private int mLayoutId;
+    private OnItemClickListener<T> mOnItemClickListener;
 
+    public OnItemClickListener<T> getOnItemClickListener() {
+        return mOnItemClickListener;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener<T> mOnItemClickListener) {
+        this.mOnItemClickListener = mOnItemClickListener;
+    }
 
     public List<T> getDataList() {
         return mDataList;
@@ -44,6 +53,11 @@ public abstract class CustomRecyclerView<T, E extends ViewDataBinding> extends R
     public void onBindViewHolder(CustomRecyclerView.CustomView holder, int position) {
 
         onBindView((E) holder.getDataBinding(), position);
+        holder.itemView.setOnClickListener(view ->  {
+           if (getOnItemClickListener() != null){
+               getOnItemClickListener().onItemClicked(mDataList.get(position));
+           }
+        });
     }
 
     @Override

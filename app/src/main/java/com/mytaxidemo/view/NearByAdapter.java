@@ -17,4 +17,5 @@ public class NearByAdapter extends CustomRecyclerView<RecyclerViewModel, Recycle
     void onBindView(RecyclerViewModelBinding stateBinding, int position) {
         stateBinding.setListItem(getDataList().get(position));
     }
+
 }

@@ -20,7 +20,8 @@
         android:layout_height="@dimen/item_height"
         android:layout_margin="@dimen/layout_margin"
         android:foreground="?android:attr/selectableItemBackground"
-        android:clickable="true">
+        android:clickable="true"
+        android:onClick="()">
 
         <RelativeLayout
             android:layout_width="match_parent"

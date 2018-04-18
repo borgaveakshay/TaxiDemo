@@ -3,6 +3,7 @@ package com.mytaxidemo.view;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -21,13 +22,14 @@ import com.mytaxidemo.viewmodel.RecyclerViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, OnItemClickListener<RecyclerViewModel> {
 
     ActivityMainBinding mActivityMainBinding;
     SupportMapFragment mMapFragment;
     MapViewHolder mMapViewHolder;
     GoogleMap mGoogleMap;
     List<Marker> mMarkers;
+    List<RecyclerViewModel> mRecyclerViewModelList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +42,21 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mMapFragment.onCreate(savedInstanceState);
         mMapFragment.getMapAsync(this);
         mActivityMainBinding.setMapViewHolder(mMapViewHolder);
-
+        mMapViewHolder.setIsSwipeToRefreshEnabled(false);
         setUpNearByTaxiDataListener();
         setUpGoogleMapMarkerListener();
     }
 
+
     private void setUpNearByTaxiDataListener() {
 
         mMapViewHolder.getNearByTaxiList().observe(this, this::onTaxiDataAvailable);
+
+    }
+
+    private void onItemClicked(int position) {
+
+        Toast.makeText(this, "Item Clicked" + position, Toast.LENGTH_LONG).show();
 
     }
 
@@ -67,7 +76,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             mGoogleMap.clear();
             mMarkers = new ArrayList<>();
             for (LatLng latLng : mMarkerList) {
-                mMarkers.add(mGoogleMap.addMarker(new MarkerOptions().position(latLng)));
+
+                mMarkers.add(mGoogleMap.addMarker(new MarkerOptions()
+                        .position(latLng)
+                ));
+
             }
             zoomMapView();
         }
@@ -97,7 +110,26 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private void setAdapter(List<RecyclerViewModel> nearByTaxis) {
 
-        NearByAdapter nearByAdapter = new NearByAdapter(nearByTaxis, R.layout.recycler_view_item);
+        mRecyclerViewModelList = new ArrayList<>(nearByTaxis);
+        NearByAdapter nearByAdapter = new NearByAdapter(mRecyclerViewModelList, R.layout.recycler_view_item);
+        nearByAdapter.setOnItemClickListener(this::onItemClicked);
         mActivityMainBinding.recycleView.setAdapter(nearByAdapter);
+    }
+
+    private void zoomToParticularMarker(LatLng latLng) {
+        if (mGoogleMap != null) {
+            mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+        }
+    }
+
+    @Override
+    public void onItemClicked(RecyclerViewModel item) {
+
+        if (item != null && item.getCoordinate() != null) {
+            zoomToParticularMarker(new LatLng(item.getCoordinate().getLatitude(), item.getCoordinate().getLongitude()));
+
+        } else {
+            Toast.makeText(this, "Please refresh list", Toast.LENGTH_LONG).show();
+        }
     }
 }

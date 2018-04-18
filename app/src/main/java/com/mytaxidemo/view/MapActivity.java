@@ -4,53 +4,76 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.mytaxidemo.R;
 import com.mytaxidemo.databinding.ActivityMainBinding;
+import com.mytaxidemo.viewmodel.MapViewHolder;
 import com.mytaxidemo.viewmodel.RecyclerViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class MapActivity extends AppCompatActivity {
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     ActivityMainBinding mActivityMainBinding;
-    List<RecyclerViewModel> mNearByTaxis;
+    SupportMapFragment mMapFragment;
+    MapViewHolder mMapViewHolder;
+    GoogleMap mGoogleMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        setNearByTaxiList();
-        setAdapter();
+        mMapViewHolder = new MapViewHolder();
+        mMapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.mapView);
+        mMapFragment.onCreate(savedInstanceState);
+        mMapFragment.getMapAsync(this);
+        mActivityMainBinding.setMapViewHolder(mMapViewHolder);
 
+        setUpNearByTaxiDataListener();
+        setUpGoogleMapMarkerListener();
+    }
 
+    private void setUpNearByTaxiDataListener() {
+
+        mMapViewHolder.getNearByTaxiList().observe(this, this::onTaxiDataAvailable);
 
     }
 
+    private void setUpGoogleMapMarkerListener() {
 
-    private void setNearByTaxiList() {
+        mMapViewHolder.getMapLatLng().observe(this, this::onMapMarkersAvailable);
 
-        mNearByTaxis = new ArrayList<>();
+    }
 
-        for (int i = 0; i < 10; i++) {
+    public void onTaxiDataAvailable(List<RecyclerViewModel> nearByTaxis) {
+        setAdapter(nearByTaxis);
+    }
 
-            RecyclerViewModel poiListItem = new RecyclerViewModel();
-            if (i == 4 || i == 5 || i == 7) {
-                poiListItem.setFleetType("POOLING");
+    public void onMapMarkersAvailable(List<LatLng> mMarkerList) {
+
+        if (mGoogleMap != null) {
+            for (LatLng latLng : mMarkerList) {
+                mGoogleMap.addMarker(new MarkerOptions().position(latLng));
             }
-            poiListItem.setHeading((i + 1) * 25.66);
-
-            mNearByTaxis.add(poiListItem);
         }
-
     }
 
-    private void setAdapter() {
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
 
+        mGoogleMap = googleMap;
+        mMapViewHolder.onSwipeRefreshListener();
+    }
 
-        NearByAdapter nearByAdapter = new NearByAdapter(mNearByTaxis, R.layout.recycler_view_item);
+    private void setAdapter(List<RecyclerViewModel> nearByTaxis) {
 
+        NearByAdapter nearByAdapter = new NearByAdapter(nearByTaxis, R.layout.recycler_view_item);
         mActivityMainBinding.recycleView.setAdapter(nearByAdapter);
     }
 }

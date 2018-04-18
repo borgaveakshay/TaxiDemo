@@ -19,7 +19,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_height"
         android:layout_margin="@dimen/layout_margin"
-        android:foreground="?android:attr/selectableItemBackground">
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="true">
 
         <RelativeLayout
             android:layout_width="match_parent"

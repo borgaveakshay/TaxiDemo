@@ -1,37 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
-            name="view"
-            type="android.view.View"/>
+            name="MapViewHolder"
+            type="com.mytaxidemo.viewmodel.MapViewHolder" />
+
     </data>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.MapActivity">
+        tools:context=".view.MapActivity"
+        app:refreshing="@{MapViewHolder.isLoading}"
+        app:onRefreshListener="@{() -> MapViewHolder.onSwipeRefreshListener()}">
 
+        <RelativeLayout
 
-        <com.google.android.gms.maps.MapView
-            android:id="@+id/mapView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycleView"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/recycler_view_height"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="@dimen/recycler_view_left_margin"
-            android:layout_marginRight="@dimen/recycler_view_right_margin"
-            android:background="@drawable/rounded_corners"
-            android:paddingTop="@dimen/recycler_view_top_padding"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+            android:layout_height="match_parent">
 
 
-    </RelativeLayout>
+            <fragment
+                android:id="@+id/mapView"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.example.mapwithmarker.MapsMarkerActivity" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycleView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/recycler_view_height"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="@dimen/recycler_view_left_margin"
+                android:layout_marginRight="@dimen/recycler_view_right_margin"
+                android:background="@drawable/rounded_corners"
+                android:paddingTop="@dimen/recycler_view_top_padding"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+
+        </RelativeLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 </layout>

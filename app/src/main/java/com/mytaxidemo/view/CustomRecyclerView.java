@@ -4,11 +4,11 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
 
+@SuppressWarnings({"ALL", "CanBeFinal"})
 public abstract class CustomRecyclerView<T, E extends ViewDataBinding> extends RecyclerView.Adapter<CustomRecyclerView.CustomView> {
 
     private List<T> mDataList;
@@ -16,7 +16,7 @@ public abstract class CustomRecyclerView<T, E extends ViewDataBinding> extends R
     private int mLayoutId;
     private OnItemClickListener<T> mOnItemClickListener;
 
-    public OnItemClickListener<T> getOnItemClickListener() {
+    private OnItemClickListener<T> getOnItemClickListener() {
         return mOnItemClickListener;
     }
 
@@ -24,12 +24,12 @@ public abstract class CustomRecyclerView<T, E extends ViewDataBinding> extends R
         this.mOnItemClickListener = mOnItemClickListener;
     }
 
-    public List<T> getDataList() {
+    List<T> getDataList() {
         return mDataList;
     }
 
 
-    public CustomRecyclerView(List<T> dataList, int layoutId) {
+    CustomRecyclerView(List<T> dataList, int layoutId) {
 
         mDataList = dataList;
         mLayoutId = layoutId;
@@ -65,6 +65,7 @@ public abstract class CustomRecyclerView<T, E extends ViewDataBinding> extends R
         return (mDataList != null && !mDataList.isEmpty()) ? mDataList.size() : 0;
     }
 
+    @SuppressWarnings("CanBeFinal")
     public class CustomView extends RecyclerView.ViewHolder {
 
         E mDataBinding;
@@ -74,7 +75,7 @@ public abstract class CustomRecyclerView<T, E extends ViewDataBinding> extends R
             mDataBinding = viewBinding;
         }
 
-        public E getDataBinding() {
+        E getDataBinding() {
             return mDataBinding;
         }
 

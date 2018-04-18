@@ -18,14 +18,15 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+@SuppressWarnings("ALL")
 public class MapViewHolder {
 
     private static final String TAG = "MapViewModel";
-    public MutableLiveData<List<LatLng>> mMapLatLng = new MutableLiveData<>();
+    private MutableLiveData<List<LatLng>> mMapLatLng = new MutableLiveData<>();
     public ObservableBoolean isLoading = new ObservableBoolean();
     public ObservableBoolean isSwipeToRefreshEnabled = new ObservableBoolean();
-    public Observable<PoiListModel> mNearByTaxis;
-    public MutableLiveData<List<RecyclerViewModel>> mNearByTaxiList = new MutableLiveData<>();
+    private Observable<PoiListModel> mNearByTaxis;
+    private MutableLiveData<List<RecyclerViewModel>> mNearByTaxiList = new MutableLiveData<>();
 
     public MutableLiveData<List<RecyclerViewModel>> getNearByTaxiList() {
         return mNearByTaxiList;

@@ -1,15 +1,13 @@
 package com.mytaxidemo.model;
 
-import android.databinding.BindingAdapter;
-import android.databinding.InverseBindingAdapter;
-import android.widget.TextView;
-
+@SuppressWarnings("unused")
 public class PoiListItem{
 	private Coordinate coordinate;
 	private String fleetType;
 	private double heading;
 	private int id;
 
+	@SuppressWarnings("unused")
 	public void setCoordinate(Coordinate coordinate){
 		this.coordinate = coordinate;
 	}

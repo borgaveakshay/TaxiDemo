@@ -4,6 +4,7 @@ import java.util.List;
 
 
 
+@SuppressWarnings("unused")
 public class PoiListModel{
 
 

@@ -6,6 +6,7 @@ import com.mytaxidemo.viewmodel.RecyclerViewModel;
 
 import java.util.List;
 
+@SuppressWarnings("WeakerAccess")
 public class NearByAdapter extends CustomRecyclerView<RecyclerViewModel, RecyclerViewModelBinding> {
 
 

@@ -22,14 +22,15 @@ import com.mytaxidemo.viewmodel.RecyclerViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("ALL")
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, OnItemClickListener<RecyclerViewModel> {
 
-    ActivityMainBinding mActivityMainBinding;
-    SupportMapFragment mMapFragment;
-    MapViewHolder mMapViewHolder;
-    GoogleMap mGoogleMap;
-    List<Marker> mMarkers;
-    List<RecyclerViewModel> mRecyclerViewModelList;
+    private ActivityMainBinding mActivityMainBinding;
+    private SupportMapFragment mMapFragment;
+    private MapViewHolder mMapViewHolder;
+    private GoogleMap mGoogleMap;
+    private List<Marker> mMarkers;
+    private List<RecyclerViewModel> mRecyclerViewModelList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +55,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     }
 
-    private void onItemClicked(int position) {
-
-        Toast.makeText(this, "Item Clicked" + position, Toast.LENGTH_LONG).show();
-
-    }
 
     private void setUpGoogleMapMarkerListener() {
 
@@ -66,11 +62,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     }
 
-    public void onTaxiDataAvailable(List<RecyclerViewModel> nearByTaxis) {
+    private void onTaxiDataAvailable(List<RecyclerViewModel> nearByTaxis) {
         setAdapter(nearByTaxis);
     }
 
-    public void onMapMarkersAvailable(List<LatLng> mMarkerList) {
+    private void onMapMarkersAvailable(List<LatLng> mMarkerList) {
 
         if (mGoogleMap != null) {
             mGoogleMap.clear();
@@ -112,7 +108,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         mRecyclerViewModelList = new ArrayList<>(nearByTaxis);
         NearByAdapter nearByAdapter = new NearByAdapter(mRecyclerViewModelList, R.layout.recycler_view_item);
-        nearByAdapter.setOnItemClickListener(this::onItemClicked);
+        nearByAdapter.setOnItemClickListener(this);
         mActivityMainBinding.recycleView.setAdapter(nearByAdapter);
     }
 

@@ -10,6 +10,7 @@ import android.support.v4.content.ContextCompat;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 
+@SuppressWarnings("ALL")
 public class Utils {
 
     public static boolean isFleetTypePooling(String fleetType) {
@@ -22,6 +23,7 @@ public class Utils {
         return String.valueOf(value);
     }
 
+    @SuppressWarnings("unused")
     public static BitmapDescriptor bitmapDescriptorFromVector(Context context, @DrawableRes int vectorDrawableResourceId) {
         Drawable background = ContextCompat.getDrawable(context, vectorDrawableResourceId);
         background.setBounds(0, 0, background.getIntrinsicWidth(), background.getIntrinsicHeight());

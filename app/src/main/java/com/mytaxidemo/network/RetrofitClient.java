@@ -6,6 +6,7 @@ import com.mytaxidemo.network.networkinterfaces.APIServices;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+@SuppressWarnings("WeakerAccess")
 public class RetrofitClient {
 
     private static Retrofit mRetrofit;
@@ -15,7 +16,7 @@ public class RetrofitClient {
         // making constructor private for not able to create instance.
     }
 
-    public static Retrofit getInstance() {
+    private static Retrofit getInstance() {
 
         if (mRetrofit == null) {
             mRetrofit = new Retrofit.Builder()

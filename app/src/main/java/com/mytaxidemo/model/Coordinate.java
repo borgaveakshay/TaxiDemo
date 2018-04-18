@@ -1,5 +1,6 @@
 package com.mytaxidemo.model;
 
+@SuppressWarnings("ALL")
 public class Coordinate{
 	private double latitude;
 	private double longitude;

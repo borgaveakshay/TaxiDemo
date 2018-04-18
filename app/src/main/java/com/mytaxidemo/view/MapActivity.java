@@ -1,6 +1,7 @@
 package com.mytaxidemo.view;
 
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
@@ -10,11 +11,14 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.mytaxidemo.R;
+import com.mytaxidemo.Util.Utils;
 import com.mytaxidemo.databinding.ActivityMainBinding;
 import com.mytaxidemo.viewmodel.MapViewHolder;
 import com.mytaxidemo.viewmodel.RecyclerViewModel;
@@ -45,7 +49,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mActivityMainBinding.setMapViewHolder(mMapViewHolder);
         mMapViewHolder.setIsSwipeToRefreshEnabled(false);
         setUpNearByTaxiDataListener();
-        setUpGoogleMapMarkerListener();
+
     }
 
 
@@ -56,31 +60,44 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
 
-    private void setUpGoogleMapMarkerListener() {
-
-        mMapViewHolder.getMapLatLng().observe(this, this::onMapMarkersAvailable);
-
-    }
-
     private void onTaxiDataAvailable(List<RecyclerViewModel> nearByTaxis) {
-        setAdapter(nearByTaxis);
+        mRecyclerViewModelList = new ArrayList<>(nearByTaxis);
+        addMarkers();
+        setAdapter();
     }
 
-    private void onMapMarkersAvailable(List<LatLng> mMarkerList) {
+    private void addMarkers() {
 
-        if (mGoogleMap != null) {
+        if (mGoogleMap != null
+                && mRecyclerViewModelList != null
+                && !mRecyclerViewModelList.isEmpty()) {
+
             mGoogleMap.clear();
             mMarkers = new ArrayList<>();
-            for (LatLng latLng : mMarkerList) {
 
-                mMarkers.add(mGoogleMap.addMarker(new MarkerOptions()
-                        .position(latLng)
-                ));
+            for (RecyclerViewModel recyclerViewModel : mRecyclerViewModelList) {
+                String fleetType = recyclerViewModel.getFleetType();
+                Bitmap bitmap;
+                if (Utils.isFleetTypePooling(fleetType)) {
+                    bitmap = Utils.getSmallIcon(this, R.drawable.ic_taxi_pool, 70, 70);
+                } else {
+                    bitmap = Utils.getSmallIcon(this, R.drawable.ic_taxi, 70, 70);
+                }
+                if (recyclerViewModel.getCoordinate() != null) {
+                    mMarkers.add(mGoogleMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(recyclerViewModel.getCoordinate().getLatitude(), recyclerViewModel.getCoordinate().getLongitude()))
+                            .icon(BitmapDescriptorFactory.fromBitmap(bitmap))
+                            .rotation((float) recyclerViewModel.getHeading())
 
+                    ));
+                }
             }
-            zoomMapView();
+
         }
+        mMapViewHolder.isLoading.set(false);
+        zoomMapView();
     }
+
 
     private void zoomMapView() {
 
@@ -91,7 +108,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 builder.include(marker.getPosition());
             }
             LatLngBounds bounds = builder.build();
-            int padding = 300; // offset from edges of the map in pixels
+            int padding = 200; // offset from edges of the map in pixels
             CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
             mGoogleMap.animateCamera(cu);
         }
@@ -104,12 +121,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mMapViewHolder.onSwipeRefreshListener();
     }
 
-    private void setAdapter(List<RecyclerViewModel> nearByTaxis) {
+    private void setAdapter() {
 
-        mRecyclerViewModelList = new ArrayList<>(nearByTaxis);
+
         NearByAdapter nearByAdapter = new NearByAdapter(mRecyclerViewModelList, R.layout.recycler_view_item);
         nearByAdapter.setOnItemClickListener(this);
         mActivityMainBinding.recycleView.setAdapter(nearByAdapter);
+
     }
 
     private void zoomToParticularMarker(LatLng latLng) {

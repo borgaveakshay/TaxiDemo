@@ -22,7 +22,6 @@ import io.reactivex.schedulers.Schedulers;
 public class MapViewHolder {
 
     private static final String TAG = "MapViewModel";
-    private MutableLiveData<List<LatLng>> mMapLatLng = new MutableLiveData<>();
     public ObservableBoolean isLoading = new ObservableBoolean();
     public ObservableBoolean isSwipeToRefreshEnabled = new ObservableBoolean();
     private Observable<PoiListModel> mNearByTaxis;
@@ -32,9 +31,6 @@ public class MapViewHolder {
         return mNearByTaxiList;
     }
 
-    public MutableLiveData<List<LatLng>> getMapLatLng() {
-        return mMapLatLng;
-    }
 
     public void setIsSwipeToRefreshEnabled(boolean isSwipeToRefreshEnabled) {
         this.isSwipeToRefreshEnabled.set(isSwipeToRefreshEnabled);
@@ -43,9 +39,6 @@ public class MapViewHolder {
 
     public void onSwipeRefreshListener() {
 
-        if (mMapLatLng.getValue() != null && !mMapLatLng.getValue().isEmpty()) {
-            mMapLatLng.setValue(new ArrayList<>());
-        }
         if (mNearByTaxiList.getValue() != null && !mNearByTaxiList.getValue().isEmpty()) {
             mNearByTaxiList.setValue(new ArrayList<>());
         }
@@ -63,7 +56,7 @@ public class MapViewHolder {
 
                     @Override
                     public void onNext(PoiListModel poiListModel) {
-                        isLoading.set(false);
+
                         if (poiListModel != null
                                 && poiListModel.getPoiList() != null
                                 && !poiListModel.getPoiList().isEmpty()) {
@@ -86,7 +79,6 @@ public class MapViewHolder {
 
                             }
                             mNearByTaxiList.postValue(recyclerViewModelList);
-                            mMapLatLng.postValue(latLngList);
                         }
 
                     }

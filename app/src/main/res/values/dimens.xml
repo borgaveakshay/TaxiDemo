@@ -12,6 +12,9 @@
     <dimen name="item_height">70dp</dimen>
     <dimen name="heading_text_size">17dp</dimen>
 
+    <!-- Splash dimens-->
 
+    <dimen name="logo_widh">200dp</dimen>
+    <dimen name="logo_height">150dp</dimen>
 
 </resources>

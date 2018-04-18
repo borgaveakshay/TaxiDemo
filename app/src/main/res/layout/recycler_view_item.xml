@@ -20,8 +20,7 @@
         android:layout_height="@dimen/item_height"
         android:layout_margin="@dimen/layout_margin"
         android:foreground="?android:attr/selectableItemBackground"
-        android:clickable="true"
-        android:onClick="()">
+        android:clickable="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -33,7 +32,7 @@
                 android:layout_height="50dp"
                 android:layout_centerVertical="true"
                 android:padding="@dimen/fleet_type_padding"
-                android:src="@{Utils.isFleetTypePooling(listItem.fleetType) ? R.drawable.ic_car_tire_blowout : R.drawable.ic_taxi}" />
+                android:src="@{Utils.isFleetTypePooling(listItem.fleetType) ? R.drawable.ic_taxi_pool : R.drawable.ic_taxi}" />
 
             <TextView
                 android:layout_width="wrap_content"

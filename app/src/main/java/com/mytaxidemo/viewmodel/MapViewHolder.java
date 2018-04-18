@@ -64,6 +64,13 @@ public class MapViewHolder {
     }
 
     public void onSwipeRefreshListener() {
+
+        if (mMapLatLng.getValue() != null && !mMapLatLng.getValue().isEmpty()) {
+            mMapLatLng.setValue(new ArrayList<>());
+        }
+        if (mNearByTaxiList.getValue() != null && !mNearByTaxiList.getValue().isEmpty()) {
+            mNearByTaxiList.setValue(new ArrayList<>());
+        }
         isLoading.set(true);
         mNearByTaxis = RetrofitClient.getAPIService().getNearByTaxis(53.694865,
                 9.757589, 53.394655, 10.099891);

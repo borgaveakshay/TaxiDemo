@@ -8,6 +8,10 @@
         <import type="android.view.View" />
 
         <variable
+            name="view"
+            type="View" />
+
+        <variable
             name="MapViewHolder"
             type="com.mytaxidemo.viewmodel.MapViewHolder" />
 
@@ -35,17 +39,59 @@
                 android:layout_height="match_parent"
                 tools:context="com.example.mapwithmarker.MapsMarkerActivity" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycleView"
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/toggle"
+                android:layout_width="@dimen/toggle_button_width"
+                android:layout_height="@dimen/toggle_button_height"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/toggle_button_bottom_margin"
+                android:layout_marginTop="@dimen/toggle_button_bottom_margin"
+                android:background="#ffffff"
+                android:checked="@{MapViewHolder.isPoolingSelected}"
+                android:onCheckedChanged="@{() -> MapViewHolder.onStateChanged()}"
+                android:textOff="@string/toggle_text_off"
+                android:textOn="@string/toggle_text_on"
+                android:visibility="@{MapViewHolder.isLoading ? view.INVISIBLE: view.VISIBLE}"
+                app:showText="true" />
+
+            <RelativeLayout
+                android:id="@+id/bottomViewParent"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/recycler_view_height"
                 android:layout_alignParentBottom="true"
                 android:layout_marginLeft="@dimen/recycler_view_left_margin"
                 android:layout_marginRight="@dimen/recycler_view_right_margin"
-                android:background="@drawable/rounded_corners"
-                android:paddingTop="@dimen/recycler_view_top_padding"
-                app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+                android:background="@drawable/rounded_corners">
 
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycleView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:paddingTop="@dimen/recycler_view_top_padding"
+                    android:visibility="@{MapViewHolder.isLoading ? view.INVISIBLE: view.VISIBLE}"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/fetching_list_message"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    android:visibility="@{MapViewHolder.isLoading ? view.VISIBLE: view.INVISIBLE}" />
+
+
+                <ImageView
+                    android:layout_width="@dimen/up_arrow_width"
+                    android:layout_height="@dimen/up_arrow_height"
+                    android:layout_alignTop="@+id/recycleView"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/ic_down_arrow" />
+
+            </RelativeLayout>
 
         </RelativeLayout>
 

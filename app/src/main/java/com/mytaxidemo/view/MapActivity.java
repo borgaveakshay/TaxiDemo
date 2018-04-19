@@ -4,6 +4,8 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -35,6 +37,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private GoogleMap mGoogleMap;
     private List<Marker> mMarkers;
     private List<RecyclerViewModel> mRecyclerViewModelList;
+    private NearByAdapter mNearByAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +51,19 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mMapFragment.getMapAsync(this);
         mActivityMainBinding.setMapViewHolder(mMapViewHolder);
         mMapViewHolder.setIsSwipeToRefreshEnabled(false);
+        mMapViewHolder.setIsPoolingSelected(false);
         setUpNearByTaxiDataListener();
+        mRecyclerViewModelList = new ArrayList<>();
+        setAdapter();
+        setCheckChangeListener();
 
     }
 
+
+    private void setCheckChangeListener() {
+
+        mMapViewHolder.getIsPoolingSelected().observe(this, this::onCheckChanged);
+    }
 
     private void setUpNearByTaxiDataListener() {
 
@@ -63,7 +75,20 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private void onTaxiDataAvailable(List<RecyclerViewModel> nearByTaxis) {
         mRecyclerViewModelList = new ArrayList<>(nearByTaxis);
         addMarkers();
-        setAdapter();
+        if (mNearByAdapter != null) {
+            mNearByAdapter.updateItems(mRecyclerViewModelList);
+        }
+
+    }
+
+    private void onCheckChanged(boolean isPoolingSelected) {
+
+        if (isPoolingSelected) {
+            mMapViewHolder.loadPoolingList();
+        } else {
+            mMapViewHolder.loadTaxiList();
+        }
+
     }
 
     private void addMarkers() {
@@ -94,7 +119,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
 
         }
-        mMapViewHolder.isLoading.set(false);
         zoomMapView();
     }
 
@@ -124,9 +148,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private void setAdapter() {
 
 
-        NearByAdapter nearByAdapter = new NearByAdapter(mRecyclerViewModelList, R.layout.recycler_view_item);
-        nearByAdapter.setOnItemClickListener(this);
-        mActivityMainBinding.recycleView.setAdapter(nearByAdapter);
+        mNearByAdapter = new NearByAdapter(mRecyclerViewModelList, R.layout.recycler_view_item);
+        mNearByAdapter.setOnItemClickListener(this);
+        mActivityMainBinding.recycleView.setAdapter(mNearByAdapter);
 
     }
 

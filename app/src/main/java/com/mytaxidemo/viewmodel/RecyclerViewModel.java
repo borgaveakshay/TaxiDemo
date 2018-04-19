@@ -8,9 +8,18 @@ import android.widget.ImageView;
 import com.mytaxidemo.model.Coordinate;
 
 public class RecyclerViewModel {
+    private int id;
     private String fleetType;
     private double heading;
     private Coordinate coordinate;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Coordinate getCoordinate() {
         return coordinate;

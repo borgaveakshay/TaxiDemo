@@ -1,10 +1,15 @@
 package com.mytaxidemo.viewmodel;
 
 import android.arch.lifecycle.MutableLiveData;
+import android.databinding.BindingAdapter;
 import android.databinding.ObservableBoolean;
+import android.support.v7.widget.SwitchCompat;
+import android.text.TextUtils;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.mytaxidemo.Util.Utils;
 import com.mytaxidemo.model.PoiListItem;
 import com.mytaxidemo.model.PoiListModel;
 import com.mytaxidemo.network.RetrofitClient;
@@ -24,8 +29,19 @@ public class MapViewHolder {
     private static final String TAG = "MapViewModel";
     public ObservableBoolean isLoading = new ObservableBoolean();
     public ObservableBoolean isSwipeToRefreshEnabled = new ObservableBoolean();
+    public MutableLiveData<Boolean> isPoolingSelected = new MutableLiveData<>();
     private Observable<PoiListModel> mNearByTaxis;
     private MutableLiveData<List<RecyclerViewModel>> mNearByTaxiList = new MutableLiveData<>();
+    private List<RecyclerViewModel> mTaxiLists = new ArrayList<>();
+    private List<RecyclerViewModel> mPoolingList = new ArrayList<>();
+
+    public void setIsPoolingSelected(boolean isPoolingSelected) {
+        this.isPoolingSelected.postValue(isPoolingSelected);
+    }
+
+    public MutableLiveData<Boolean> getIsPoolingSelected() {
+        return isPoolingSelected;
+    }
 
     public MutableLiveData<List<RecyclerViewModel>> getNearByTaxiList() {
         return mNearByTaxiList;
@@ -60,25 +76,17 @@ public class MapViewHolder {
                         if (poiListModel != null
                                 && poiListModel.getPoiList() != null
                                 && !poiListModel.getPoiList().isEmpty()) {
-                            List<LatLng> latLngList = new ArrayList<>();
-                            List<RecyclerViewModel> recyclerViewModelList = new ArrayList<>();
+
                             for (PoiListItem poiListItem : poiListModel.getPoiList()) {
-
-                                if (poiListItem.getCoordinate() != null) {
-                                    double latitude = poiListItem.getCoordinate().getLatitude();
-                                    double longitude = poiListItem.getCoordinate().getLongitude();
-                                    LatLng latLng = new LatLng(latitude, longitude);
-                                    latLngList.add(latLng);
-                                }
-
                                 RecyclerViewModel recyclerViewModel = new RecyclerViewModel();
                                 recyclerViewModel.setFleetType(poiListItem.getFleetType());
                                 recyclerViewModel.setHeading(poiListItem.getHeading());
                                 recyclerViewModel.setCoordinate(poiListItem.getCoordinate());
-                                recyclerViewModelList.add(recyclerViewModel);
+                                recyclerViewModel.setId(poiListItem.getId());
+                                formatList(recyclerViewModel);
 
                             }
-                            mNearByTaxiList.postValue(recyclerViewModelList);
+                            mNearByTaxiList.postValue(mTaxiLists);
                         }
 
                     }
@@ -93,9 +101,45 @@ public class MapViewHolder {
                     @Override
                     public void onComplete() {
 
+                        isLoading.set(false);
                         Log.i(TAG, "Api execution completed: ");
 
                     }
                 });
+    }
+
+    private void formatList(RecyclerViewModel recyclerViewModel) {
+
+        if (recyclerViewModel != null
+                && !TextUtils.isEmpty(recyclerViewModel.getFleetType())) {
+
+            if (Utils.isFleetTypePooling(recyclerViewModel.getFleetType()))
+                mPoolingList.add(recyclerViewModel);
+            else
+                mTaxiLists.add(recyclerViewModel);
+
+        }
+
+    }
+
+    public void loadTaxiList() {
+        mNearByTaxiList.postValue(mTaxiLists);
+    }
+
+    public void loadPoolingList() {
+        mNearByTaxiList.postValue(mPoolingList);
+    }
+
+
+    public void onStateChanged() {
+
+        if (isPoolingSelected.getValue() == true) {
+            isPoolingSelected.postValue(false);
+        } else {
+            isPoolingSelected.postValue(true);
+        }
+
+        Log.i(TAG, "isPoolingSelected: " + isPoolingSelected.getValue());
+
     }
 }

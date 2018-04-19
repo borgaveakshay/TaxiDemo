@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:text='@{String.valueOf(listItem.heading)}' />
+                android:text='@{listItem.fleetType+String.valueOf(listItem.heading)}' />
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>

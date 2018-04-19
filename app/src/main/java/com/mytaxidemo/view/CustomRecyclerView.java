@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings({"ALL", "CanBeFinal"})
@@ -78,6 +79,13 @@ public abstract class CustomRecyclerView<T, E extends ViewDataBinding> extends R
         E getDataBinding() {
             return mDataBinding;
         }
+
+    }
+
+    public void updateItems(List<T> dataList){
+
+        mDataList = new ArrayList<>(dataList);
+        notifyDataSetChanged();
 
     }
 

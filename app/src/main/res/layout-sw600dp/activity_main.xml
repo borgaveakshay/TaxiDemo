@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="MapViewHolder"
+            type="com.mytaxidemo.viewmodel.MapViewHolder" />
+
+    </data>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeToRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:enabled="@{MapViewHolder.isSwipeToRefreshEnabled}"
+        app:onRefreshListener="@{() -> MapViewHolder.onSwipeRefreshListener()}"
+        app:refreshing="@{MapViewHolder.isLoading}"
+        tools:context=".view.MapActivity">
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <fragment
+                android:id="@+id/mapView"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.example.mapwithmarker.MapsMarkerActivity" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycleView"
+                android:layout_width="@dimen/recycler_view_width"
+                android:layout_height="@dimen/recycler_view_height"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="@dimen/recycler_view_left_margin"
+                android:layout_marginRight="@dimen/recycler_view_right_margin"
+                android:background="@drawable/rounded_corners"
+                android:paddingTop="@dimen/recycler_view_top_padding"
+                android:layout_centerHorizontal="true"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+
+        </RelativeLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+</layout>

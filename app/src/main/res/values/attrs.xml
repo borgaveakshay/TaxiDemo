@@ -4,4 +4,8 @@
         <attr name="refreshing" format="boolean"/>
         <attr name="enabled" format="boolean"/>
     </declare-styleable>
+
+    <declare-styleable name="SwitchCompat">
+        <attr name="checkChanged" format="boolean"/>
+    </declare-styleable>
 </resources>

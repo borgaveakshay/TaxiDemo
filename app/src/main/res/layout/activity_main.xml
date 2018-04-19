@@ -71,7 +71,7 @@
                     android:layout_marginLeft="@dimen/margin_left_toggle_off"
                     android:layout_marginTop="@dimen/margin_left_toggle_off"
                     android:text="@string/toggle_text_off"
-                    android:textColor="@color/colorWhite "
+                    android:textColor="@color/colorWhite"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:visibility="@{MapViewHolder.isLoading ? view.INVISIBLE: view.VISIBLE}" />
@@ -85,7 +85,7 @@
                     android:layout_marginRight="@dimen/margin_left_toggle_off"
                     android:layout_marginTop="@dimen/margin_left_toggle_off"
                     android:text="@string/toggle_text_on"
-                    android:textColor="@color/colorWhite "
+                    android:textColor="@color/colorWhite"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:visibility="@{MapViewHolder.isLoading ? view.INVISIBLE: view.VISIBLE}" />
@@ -97,6 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/recycler_view_height"
                 android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
                 android:layout_marginLeft="@dimen/recycler_view_left_margin"
                 android:layout_marginRight="@dimen/recycler_view_right_margin"
                 android:background="@drawable/rounded_corners">

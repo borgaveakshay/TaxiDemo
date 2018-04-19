@@ -39,21 +39,58 @@
                 android:layout_height="match_parent"
                 tools:context="com.example.mapwithmarker.MapsMarkerActivity" />
 
-            <android.support.v7.widget.SwitchCompat
-                android:id="@+id/toggle"
+            <RelativeLayout
                 android:layout_width="@dimen/toggle_button_width"
                 android:layout_height="@dimen/toggle_button_height"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="@dimen/toggle_button_bottom_margin"
-                android:layout_marginTop="@dimen/toggle_button_bottom_margin"
-                android:background="#ffffff"
-                android:checked="@{MapViewHolder.isPoolingSelected}"
-                android:onCheckedChanged="@{() -> MapViewHolder.onStateChanged()}"
-                android:textOff="@string/toggle_text_off"
-                android:textOn="@string/toggle_text_on"
-                android:visibility="@{MapViewHolder.isLoading ? view.INVISIBLE: view.VISIBLE}"
-                app:showText="true" />
+                android:layout_centerHorizontal="true">
+
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/toggle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginBottom="@dimen/toggle_button_bottom_margin"
+                    android:layout_marginTop="@dimen/toggle_button_bottom_margin"
+                    android:background="@drawable/radio_button_background"
+                    android:checked="@{MapViewHolder.isPoolingSelected}"
+                    android:onCheckedChanged="@{() -> MapViewHolder.onStateChanged()}"
+                    android:textColor="#ff0000"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:theme="@style/SwitchStyle"
+                    android:thumb="@drawable/radio_button"
+                    android:visibility="@{MapViewHolder.isLoading ? view.INVISIBLE: view.VISIBLE}" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/margin_left_toggle_off"
+                    android:layout_marginTop="@dimen/margin_left_toggle_off"
+                    android:text="@string/toggle_text_off"
+                    android:textColor="@color/colorWhite "
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:visibility="@{MapViewHolder.isLoading ? view.INVISIBLE: view.VISIBLE}" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/margin_left_toggle_off"
+                    android:layout_marginTop="@dimen/margin_left_toggle_off"
+                    android:text="@string/toggle_text_on"
+                    android:textColor="@color/colorWhite "
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:visibility="@{MapViewHolder.isLoading ? view.INVISIBLE: view.VISIBLE}" />
+
+            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/bottomViewParent"

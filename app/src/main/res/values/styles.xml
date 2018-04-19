@@ -1,5 +1,10 @@
 <resources>
 
+    <style name="SwitchStyle" parent="android:Widget.CompoundButton">
+        <item name="colorControlActivated">@color/Transparent</item>
+        <item name="android:colorForeground">@color/Transparent</item>
+    </style>
+
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->

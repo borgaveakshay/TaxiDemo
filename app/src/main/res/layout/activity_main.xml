@@ -60,7 +60,8 @@
                     android:textStyle="bold"
                     android:theme="@style/SwitchStyle"
                     android:thumb="@drawable/radio_button"
-                    android:visibility="@{MapViewHolder.isLoading ? view.INVISIBLE: view.VISIBLE}" />
+                    android:visibility="@{MapViewHolder.isLoading ? view.INVISIBLE: view.VISIBLE}"
+                    tools:ignore="SpUsage" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -88,7 +89,8 @@
                     android:textColor="@color/colorWhite"
                     android:textSize="15sp"
                     android:textStyle="bold"
-                    android:visibility="@{MapViewHolder.isLoading ? view.INVISIBLE: view.VISIBLE}" />
+                    android:visibility="@{MapViewHolder.isLoading ? view.INVISIBLE: view.VISIBLE}"
+                    tools:ignore="RelativeOverlap" />
 
             </RelativeLayout>
 
@@ -100,7 +102,8 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="@dimen/recycler_view_left_margin"
                 android:layout_marginRight="@dimen/recycler_view_right_margin"
-                android:background="@drawable/rounded_corners">
+                android:background="@drawable/rounded_corners"
+                tools:ignore="RtlHardcoded">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycleView"
@@ -127,7 +130,8 @@
                     android:layout_height="@dimen/up_arrow_height"
                     android:layout_alignTop="@+id/recycleView"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/ic_down_arrow" />
+                    android:src="@drawable/ic_down_arrow"
+                    tools:ignore="ContentDescription" />
 
             </RelativeLayout>
 

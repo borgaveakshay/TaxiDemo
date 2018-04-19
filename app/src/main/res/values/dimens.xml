@@ -18,7 +18,6 @@
     <dimen name="fleet_type_padding">15dp</dimen>
     <dimen name="layout_margin">5dp</dimen>
     <dimen name="item_height">70dp</dimen>
-    <dimen name="heading_text_size">17dp</dimen>
     <dimen name="fleet_type_icon_width">60dp</dimen>
     <dimen name="fleet_type_icon_height">60dp</dimen>
 

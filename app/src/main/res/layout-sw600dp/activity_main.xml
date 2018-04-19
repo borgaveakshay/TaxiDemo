@@ -45,7 +45,8 @@
                 android:background="@drawable/rounded_corners"
                 android:paddingTop="@dimen/recycler_view_top_padding"
                 android:layout_centerHorizontal="true"
-                app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                tools:ignore="RtlHardcoded" />
 
 
         </RelativeLayout>

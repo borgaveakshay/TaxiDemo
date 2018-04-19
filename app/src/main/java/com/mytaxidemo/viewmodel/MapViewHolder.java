@@ -1,14 +1,10 @@
 package com.mytaxidemo.viewmodel;
 
 import android.arch.lifecycle.MutableLiveData;
-import android.databinding.BindingAdapter;
 import android.databinding.ObservableBoolean;
-import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.TextView;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.mytaxidemo.Util.Utils;
 import com.mytaxidemo.model.PoiListItem;
 import com.mytaxidemo.model.PoiListModel;

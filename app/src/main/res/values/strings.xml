@@ -1,6 +1,6 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">MyTaxiDemo</string>
     <string name="toggle_text_on">Pool</string>
     <string name="toggle_text_off">Taxi</string>
-    <string name="fetching_list_message">Fetching List...</string>
+    <string name="fetching_list_message" tools:ignore="TypographyEllipsis">Fetching List...</string>
 </resources>

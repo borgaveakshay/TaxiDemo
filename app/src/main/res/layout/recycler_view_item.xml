@@ -20,7 +20,8 @@
         android:layout_height="@dimen/item_height"
         android:layout_margin="@dimen/layout_margin"
         android:clickable="true"
-        android:foreground="?android:attr/selectableItemBackground">
+        android:foreground="?android:attr/selectableItemBackground"
+        tools:ignore="KeyboardInaccessibleWidget">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -37,7 +38,8 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/marginleft_flleticon"
                 android:padding="@dimen/fleet_type_padding"
-                android:src="@{Utils.isFleetTypePooling(listItem.fleetType) ? R.drawable.ic_taxi_pool : R.drawable.ic_taxi}" />
+                android:src="@{Utils.isFleetTypePooling(listItem.fleetType) ? R.drawable.ic_taxi_pool : R.drawable.ic_taxi}"
+                tools:ignore="RtlHardcoded" />
 
             <TextView
                 android:layout_width="wrap_content"

@@ -82,6 +82,11 @@ public abstract class CustomRecyclerView<T, E extends ViewDataBinding> extends R
 
     }
 
+    /**
+     *
+     * @param dataList
+     * This method will notify changed data set to recycler view.
+     */
     public void updateItems(List<T> dataList){
 
         mDataList = new ArrayList<>(dataList);
@@ -90,6 +95,12 @@ public abstract class CustomRecyclerView<T, E extends ViewDataBinding> extends R
     }
 
 
+    /**
+     *
+     * @param stateBinding
+     * @param position
+     * This method will get called on bind view of recyler view lifecycle method
+     */
     abstract void onBindView(E stateBinding, int position);
 
 }

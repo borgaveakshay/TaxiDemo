@@ -45,6 +45,12 @@ public class RecyclerViewModel {
         this.heading = heading;
     }
 
+    /**
+     *
+     * @param view
+     * @param resourceId
+     * This method binds image to view.
+     */
     @SuppressLint("ResourceType")
     @BindingAdapter("android:src")
     public static void setImage(ImageView view, @IdRes int resourceId) {

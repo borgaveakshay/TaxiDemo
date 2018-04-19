@@ -7,6 +7,12 @@ import android.graphics.drawable.BitmapDrawable;
 @SuppressWarnings("ALL")
 public class Utils {
 
+    /**
+     *
+     * @param fleetType
+     * @return
+     * Method verifies fleet type
+     */
     public static boolean isFleetTypePooling(String fleetType) {
 
         return "POOLING".equals(fleetType);
@@ -17,6 +23,15 @@ public class Utils {
         return String.valueOf(value);
     }
 
+    /**
+     *
+      * @param context
+     * @param resourceId
+     * @param height
+     * @param width
+     * @return
+     * Method returns bitmap with given dimmenssion from PNG image
+     */
    public static Bitmap getSmallIcon(Context context, int resourceId, int height, int width){
 
        BitmapDrawable bitmapdraw=(BitmapDrawable)context.getResources().getDrawable(resourceId);

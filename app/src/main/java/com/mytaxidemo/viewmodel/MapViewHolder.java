@@ -31,24 +31,46 @@ public class MapViewHolder {
     private List<RecyclerViewModel> mTaxiLists = new ArrayList<>();
     private List<RecyclerViewModel> mPoolingList = new ArrayList<>();
 
+    /**
+     *
+     * @param isPoolingSelected
+     * Method sets the switch widget state
+     */
     public void setIsPoolingSelected(boolean isPoolingSelected) {
         this.isPoolingSelected.postValue(isPoolingSelected);
     }
 
+    /**
+     * Method retruns observable boolean whick toggles on switch check change.
+     * @return
+     */
     public MutableLiveData<Boolean> getIsPoolingSelected() {
         return isPoolingSelected;
     }
 
+    /**
+     *
+     * @return
+     * Method returns observable list of near by taxis
+     */
     public MutableLiveData<List<RecyclerViewModel>> getNearByTaxiList() {
         return mNearByTaxiList;
     }
 
 
+    /**
+     *
+     * @param isSwipeToRefreshEnabled
+     * Method defines whether to enable swipe to refresh or not
+     */
     public void setIsSwipeToRefreshEnabled(boolean isSwipeToRefreshEnabled) {
         this.isSwipeToRefreshEnabled.set(isSwipeToRefreshEnabled);
     }
 
 
+    /**
+     * This method calls API to fetch near by taxis
+     */
     public void onSwipeRefreshListener() {
 
         if (mNearByTaxiList.getValue() != null && !mNearByTaxiList.getValue().isEmpty()) {

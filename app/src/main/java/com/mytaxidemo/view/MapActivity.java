@@ -56,18 +56,28 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     }
 
-
+    /**
+     * Intialize obsercer for switch change listener
+     */
     private void setCheckChangeListener() {
 
         mMapViewHolder.getIsPoolingSelected().observe(this, this::onCheckChanged);
     }
 
+    /**
+     * Intialize observer for Successful API list callback
+     */
     private void setUpNearByTaxiDataListener() {
 
         mMapViewHolder.getNearByTaxiList().observe(this, this::onTaxiDataAvailable);
 
     }
 
+    /**
+     *
+     * @param nearByTaxis
+     * Observer callback for API callback
+     */
 
     private void onTaxiDataAvailable(List<RecyclerViewModel> nearByTaxis) {
         mRecyclerViewModelList = new ArrayList<>(nearByTaxis);
@@ -78,6 +88,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     }
 
+    /**
+     *
+     * @param isPoolingSelected
+     * Observer callback for switch widget
+     */
     private void onCheckChanged(boolean isPoolingSelected) {
 
         if (isPoolingSelected) {
@@ -88,6 +103,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     }
 
+    /**
+     * Method adds markes to the map post for API list
+     */
     private void addMarkers() {
 
         if (mGoogleMap != null
@@ -119,7 +137,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         zoomMapView();
     }
 
-
+    /**
+     * Method zooms map to accomodate all added markers
+     */
     private void zoomMapView() {
 
         if (mGoogleMap != null && mMarkers != null && !mMarkers.isEmpty()) {
@@ -142,21 +162,30 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mMapViewHolder.onSwipeRefreshListener();
     }
 
+    /**
+     * method sets rececler view adapter
+     */
     private void setAdapter() {
-
-
         mNearByAdapter = new NearByAdapter(mRecyclerViewModelList, R.layout.recycler_view_item);
         mNearByAdapter.setOnItemClickListener(this);
         mActivityMainBinding.recycleView.setAdapter(mNearByAdapter);
-
     }
 
+    /**
+     *
+     * @param latLng
+     * Method zooms perticular marker
+     */
     private void zoomToParticularMarker(LatLng latLng) {
         if (mGoogleMap != null) {
             mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
         }
     }
 
+    /**
+     * Method gets called when user clicks on one of the recycler item
+     * @param item
+     */
     @Override
     public void onItemClicked(RecyclerViewModel item) {
 
